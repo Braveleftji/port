@@ -3,7 +3,9 @@ from tkinter  import *
 import threading
 import random
 import math
-
+#윈도우 크기
+w=900
+h=600
 #상단 버튼 선택프레임 좌표
 sx=0            
 sy=0
@@ -16,14 +18,13 @@ time=60
 #점수
 highscore=0
 score=0    
+
 makeCode=""
 goalCode="goal"
 class Game():
     def __init__(self):     #게임화면 셋팅
         self.window=Tk()
         self.window.title("Hamburger")
-        w=900
-        h=600
         sw = self.window.winfo_screenwidth()
         sh = self.window.winfo_screenheight()
         x = (sw - w)/2
@@ -37,11 +38,13 @@ class Game():
         self.set()
         #첫 화면  
         self.sTi=PhotoImage(file="img\배경화면3.png")
-        self.startCnvs=Canvas(self.gameCnvs,width=900,height=700,bd=0,bg="brown")         
+        self.startCnvs=Canvas(self.gameCnvs,width=900,height=700,bd=0,bg="brown")  
+        self.gameCnvs.create_window(w/2,h/2,window=self.startCnvs,tags="startCnvs")       
         self.startCnvs.create_image(450,350,image=self.sTi)
-        self.startCnvs.place(x=0,y=-50)
+        #self.startCnvs.place(x=0,y=-50)
         btn1=Button(self.startCnvs, text="Game Start!",bg="red",font=("빙그레 싸만코체",20,"bold"),command=self.startMotion)
         btn1.place(x=375,y=500)
+
         self.window.bind('<KeyPress>',self.key)    
         self.window.mainloop()
         
@@ -61,12 +64,12 @@ class Game():
     
     #첫화면 올리고 카운트
     def startMotion(self):
-        for x in range(20) :
-            self.startCnvs.place(x=0,y=-50+x*2)
+        for x in range(10) :
+            self.gameCnvs.move("startCnvs",0,5)
             t.sleep(0.01)
             self.window.update()
         for x in range(35) :
-            self.startCnvs.place(x=0,y=-30-x*20)
+            self.gameCnvs.move("startCnvs",0,-30-x*20)
             t.sleep(0.01)
             self.window.update()
         self.startCnvs.destroy()
