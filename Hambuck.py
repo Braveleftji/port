@@ -260,15 +260,10 @@ class Game():
                 self.timeCnvs.create_image(40,27.5,image=self.rN[i10],tags="t1")  
                 self.timeCnvs.create_image(80,27.5,image=self.rN[i1],tags="t2") 
                 self.timeCnvs.create_image(115,27.5,image=self.rC,tags="t3")
-                self.timeCnvs.create_image(150,27.5,image=self.rN[int(i_1)],tags="t4")
+                if i_1==".":self.timeCnvs.create_image(150,27.5,image=self.rN[0],tags="t4") #0초버그
+                else:self.timeCnvs.create_image(150,27.5,image=self.rN[int(i_1)],tags="t4")
                 if i__1=="":self.timeCnvs.create_image(190,27.5,image=self.rN[0],tags="t5")
                 else:self.timeCnvs.create_image(190,27.5,image=self.rN[int(i__1)],tags="t5")
-            elif i==0: #0초에 버그 발생 방지
-                self.timeCnvs.create_image(40,27.5,image=self.rN[0],tags="t1")  
-                self.timeCnvs.create_image(80,27.5,image=self.rN[0],tags="t2") 
-                self.timeCnvs.create_image(115,27.5,image=self.rC,tags="t3")
-                self.timeCnvs.create_image(150,27.5,image=self.rN[0],tags="t4")
-                self.timeCnvs.create_image(190,27.5,image=self.rN[0],tags="t5")
             
     #게임 종료
     def endGame(self):
