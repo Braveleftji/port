@@ -53,7 +53,7 @@ class Game():
         global goalCode  #게임화면 전환
         self.goalImg=random.choice(list(self.goal.keys()))                   #목표햄버거 이미지 선택
         self.hambCnvs.create_image(110,120,image=self.goalImg,tags="img")    #캔버스에 그리기
-        goalCode=self.goal.get(self.goalImg)                                 #목표햄버거 코드값 가져오기
+        goalCode=self.goal.get(self.goalImg)            #목표햄버거 코드값 가져오기
         self.th1 = threading.Thread(target=self.get_Goal)
         self.timerOn()
     #재시작시  
@@ -247,7 +247,7 @@ class Game():
     def timeSet(self,i):
             i10=math.trunc(i/10)                #남은시간 10의 자리수
             i1=math.trunc(i-i10*10)             #남은시간 1의 자리수
-            i_1=str(round(i-int(i),2))[2:3]     #남은시간 0.1의자 리수
+            i_1=str(round(i-int(i),2))[2:3]     #남은시간 0.1의 자리수
             i__1=str(round(i-int(i),2))[3:4]    #남은시간 0.01의 자리수
             if i>10:
                 self.timeCnvs.create_image(40,27.5,image=self.yN[i10],tags="t1")  
@@ -256,13 +256,19 @@ class Game():
                 self.timeCnvs.create_image(150,27.5,image=self.yN[int(i_1)],tags="t4")
                 if i__1=="":self.timeCnvs.create_image(190,27.5,image=self.yN[0],tags="t5")
                 else:self.timeCnvs.create_image(190,27.5,image=self.yN[int(i__1)],tags="t5")
-            else:
+            elif i<10:
                 self.timeCnvs.create_image(40,27.5,image=self.rN[i10],tags="t1")  
                 self.timeCnvs.create_image(80,27.5,image=self.rN[i1],tags="t2") 
                 self.timeCnvs.create_image(115,27.5,image=self.rC,tags="t3")
                 self.timeCnvs.create_image(150,27.5,image=self.rN[int(i_1)],tags="t4")
                 if i__1=="":self.timeCnvs.create_image(190,27.5,image=self.rN[0],tags="t5")
                 else:self.timeCnvs.create_image(190,27.5,image=self.rN[int(i__1)],tags="t5")
+            elif i==0: #0초에 버그 발생 방지
+                self.timeCnvs.create_image(40,27.5,image=self.rN[0],tags="t1")  
+                self.timeCnvs.create_image(80,27.5,image=self.rN[0],tags="t2") 
+                self.timeCnvs.create_image(115,27.5,image=self.rC,tags="t3")
+                self.timeCnvs.create_image(150,27.5,image=self.rN[0],tags="t4")
+                self.timeCnvs.create_image(190,27.5,image=self.rN[0],tags="t5")
             
     #게임 종료
     def endGame(self):
@@ -293,6 +299,7 @@ class Game():
         self.goalImg=random.choice(list(self.goal.keys()))
         self.hambCnvs.create_image(-92,120,image=self.goalImg,tags="img2")
         goalCode=self.goal.get(self.goalImg)
+        print("goalCode:",goalCode)                   
         for x in range(20):
             self.hambCnvs.move("img",15,0)
             self.hambCnvs.move("img2",10,0)
@@ -371,6 +378,7 @@ class Game():
         if img ==self.lettuce:
             self.makeY-=6    
         makeCode += code
+        print("makeCode:",makeCode)
         if not goalCode.startswith(makeCode):
             self.endM()
         if makeCode==goalCode:
